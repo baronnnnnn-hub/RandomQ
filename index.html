@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Рандомні цитати</title>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
   </head>
   <body>
     <div class="container">
@@ -14,9 +20,12 @@
       </p>
       <p id="quote-author" class="author"></p>
       <button id="newQuote" class="button">Нова цитата</button>
-      <button id="makeFavoriteBtn" class="button">Додати до вибраних</button>
+      <i
+        class="far fa-star star-icon"
+        aria-hidden="true"
+        id="makeFavoriteBtn"></i>
     </div>
     <div class="favorites-container" id="favorites-container"></div>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>

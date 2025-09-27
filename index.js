@@ -1,4 +1,9 @@
-import quotes from './quotes.js'
+import quotes from './src/quotes.js'
+import {
+  removeFavoriteQuote,
+  showFavoriteQoute,
+  toggleFavoriteIcon,
+} from './src/favoritesHandler.js'
 
 const quoteEl = document.getElementById('quote')
 const quoteAuthorEl = document.getElementById('quote-author')
@@ -13,31 +18,23 @@ function generateRandomQuote() {
   const randomQvote = quotes[currentQuoteIndex]
   quoteEl.textContent = randomQvote.text
   quoteAuthorEl.textContent = '— ' + randomQvote.author
-  toggleFavoriteBtn.textContent = randomQvote.isFavorite
-    ? 'Видалити з вибраних'
-    : 'Додати до вибраних'
+  toggleFavoriteIcon(randomQvote.isFavorite, toggleFavoriteBtn)
   toggleFavoriteBtn.style.display = 'inline-block'
 }
+
 function toggleFavorite() {
   const currentQuote = quotes[currentQuoteIndex]
   currentQuote.isFavorite = !currentQuote.isFavorite
-  toggleFavoriteBtn.textContent = currentQuote.isFavorite
-    ? 'Видалити з вибраних'
-    : 'Додати до вибраних'
+  toggleFavoriteIcon(currentQuote.isFavorite, toggleFavoriteBtn)
+
   if (currentQuote.isFavorite) {
-    favoritesContainer.classList.add('active')
-    const favoriteCard = document.createElement('div')
-    favoriteCard.classList.add('favorite-card')
-    favoriteCard.innerHTML = `<p>${currentQuote.text}</p>
-    <p class = "author">${currentQuote.author}</p>`
-    favoritesContainer.appendChild(favoriteCard)
+    showFavoriteQoute(
+      currentQuote.text,
+      currentQuote.author,
+      favoritesContainer
+    )
   } else {
-    const favoriteCards = document.querySelectorAll('.favorite-card')
-    favoriteCards.forEach((card) => {
-      if (card.textContent.includes(currentQuote.text)) {
-        card.remove()
-      }
-    })
+    removeFavoriteQuote(currentQuote.text)
     if (favoritesContainer.children.length === 0) {
       favoritesContainer.classList.remove('active')
     }
