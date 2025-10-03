@@ -1,55 +1,73 @@
-import { favoriteBtn } from '../../index.js'
+import { quoteFavoriteBtn } from '../../index.js'
 
-function toggleFavorite(quote, btn, container) {
+function toggleFavorite({ quote, btn, container }) {
   quote.isFavorite = !quote.isFavorite
-  const { text, author, isFavorite } = quote
-  toggleFavoriteBtnIcon(isFavorite, btn)
+  toggleFavoriteBtnIcon(quote.isFavorite, btn)
 
-  if (isFavorite) {
-    showFavoriteQoute(text, author, container)
-  } else {
-    removeFavoriteQuote(text)
+  quote.isFavorite
+    ? showFavoriteQuote(quote, container)
+    : removeFavoriteCard(quote.id)
 
-    if (container.children.length === 0) {
-      container.classList.remove('active')
-    }
+  if (container.children.length === 0) {
+    container.classList.remove('active')
   }
 }
 
 function handleFavorite(isFavorite) {
-  showBtn(favoriteBtn)
-  toggleFavoriteBtnIcon(isFavorite, favoriteBtn)
+  showBtn()
+  toggleFavoriteBtnIcon(isFavorite)
 }
 
-function toggleFavoriteBtnIcon(isFavorite, btn) {
-  btn.classList.toggle('fa', isFavorite)
-  btn.classList.toggle('far', !isFavorite)
+function toggleFavoriteBtnIcon(isFavorite) {
+  quoteFavoriteBtn.classList.toggle('fa', isFavorite)
+  quoteFavoriteBtn.classList.toggle('far', !isFavorite)
 }
 
-function showBtn(btn) {
-  btn.style.display = 'inline-block'
+function showBtn() {
+  quoteFavoriteBtn.style.display = 'inline-block'
 }
 
-function hideBtn(btn) {
-  btn.style.display = 'none'
+function hideBtn() {
+  quoteFavoriteBtn.style.display = 'none'
 }
 
-function showFavoriteQoute(text, author, container) {
+function removeFavoriteQuote(quote, container) {
+  const currentQuote = document.querySelector('[data-current-quote-id]')
+  const currentQuoteId = currentQuote.dataset.currentQuoteId
+  quote.isFavorite = false
+  removeFavoriteCard(quote.id)
+  if (quote.id === currentQuoteId) {
+    toggleFavoriteBtnIcon(quote.isFavorite)
+  }
+  if (container.children.length === 0) {
+    container.classList.remove('active')
+  }
+}
+
+function showFavoriteQuote(quote, container) {
+  const { id, text, author } = quote
   container.classList.add('active')
   const favoriteCard = document.createElement('div')
   favoriteCard.classList.add('favorite-card')
-  favoriteCard.innerHTML = `<p>${text}</p>
-    <p class = "author">${author}</p>`
+  favoriteCard.dataset.favoriteQuoteId = id
+  favoriteCard.innerHTML = `
+  <div class="favorite-card-content">
+    <p>${text}</p>
+    <p class = "author">${author}</p>
+  </div>
+  <button class = "delete-btn">Видалити з улюблених  <i class="far fa-trash-alt"></i></button>`
   container.appendChild(favoriteCard)
+  const removeButton = favoriteCard.querySelector('.delete-btn')
+  removeButton.addEventListener('click', () =>
+    removeFavoriteQuote(quote, container)
+  )
 }
 
-function removeFavoriteQuote(text) {
-  const favoriteCards = document.querySelectorAll('.favorite-card')
-  favoriteCards.forEach((card) => {
-    if (card.textContent.includes(text)) {
-      card.remove()
-    }
-  })
+function removeFavoriteCard(id) {
+  const card = document.querySelector(
+    `.favorite-card[data-favorite-quote-id="${id}"]`
+  )
+  card && card.remove()
 }
 
 export { handleFavorite, toggleFavorite, hideBtn }

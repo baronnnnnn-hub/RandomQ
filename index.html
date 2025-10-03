@@ -15,12 +15,17 @@
   <body>
     <div class="container">
       <h1>Рандомні цитати</h1>
-      <p id="quote" class="quote">
-        Натисніть кнопку, щоб отримати випадкову цитату.
-      </p>
-      <p id="quote-author" class="author"></p>
-      <button id="newQuote" class="button">Нова цитата</button>
-      <i class="far fa-star star-icon" aria-hidden="true" id="favoriteBtn"></i>
+      <div id="quote">
+        <p id="quote-text" class="quote">
+          Натисніть кнопку, щоб отримати випадкову цитату.
+        </p>
+        <p id="quote-author" class="author"></p>
+        <button id="newQuote" class="button">Нова цитата</button>
+        <i
+          class="far fa-star star-icon"
+          aria-hidden="true"
+          id="quote-favorite-btn"></i>
+      </div>
     </div>
     <div class="favorites-container" id="favorites-container"></div>
     <script type="module" src="index.js"></script>

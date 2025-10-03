@@ -8,13 +8,17 @@ function setCurrentQuote(quote) {
   currentQuote = quote
 }
 
-const favoriteBtn = document.getElementById('favoriteBtn')
+const quoteFavoriteBtn = document.getElementById('quote-favorite-btn')
 const favoritesContainer = document.getElementById('favorites-container')
 
-hideBtn(favoriteBtn)
+hideBtn()
 
-favoriteBtn.addEventListener('click', () =>
-  toggleFavorite(currentQuote, favoriteBtn, favoritesContainer)
+quoteFavoriteBtn.addEventListener('click', () =>
+  toggleFavorite({
+    quote: currentQuote,
+    btn: quoteFavoriteBtn,
+    container: favoritesContainer,
+  })
 )
 
 const newQuoteBtn = document.getElementById('newQuote')
@@ -23,4 +27,4 @@ newQuoteBtn.addEventListener('click', () =>
   handleQuote(quotes, setCurrentQuote)
 )
 
-export { favoriteBtn }
+export { quoteFavoriteBtn }
